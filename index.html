@@ -1,118 +1,147 @@
 <!doctype html>
 <html lang="es">
 
-  <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Kanban 2026</title>
-    <link rel="stylesheet" href="css/style.css">
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link
-      href="https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&display=swap"
-      rel="stylesheet">
-    <script src="sqlite3.js"></script>
-    <script src="main.js"></script>
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Kanban 2026</title>
+  <link rel="stylesheet" href="css/style.css">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link
+    href="https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&display=swap"
+    rel="stylesheet">
+  <script src="./sqlite3.js"></script>
+  <script type="module" src="/src/main.js"></script>
 
+</head>
 
-  </head>
+<body>
+  <header class="py-3 px-6 bg-white border-b border-border-custom">
+    <div class="flex items-center gap-2.5">
+      <svg width="25" height="25" viewBox="0 0 25 25" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <path
+          d="M6.25 18.375H8.75V6.25H6.25V18.375ZM15.875 15.875H18.375V6.25H15.875V15.875ZM11.0625 12.125H13.5625V6.25H11.0625V12.125ZM3.9375 24.625C2.83333 24.625 1.90104 24.2448 1.14062 23.4844C0.380208 22.724 0 21.7917 0 20.6875V3.9375C0 2.83333 0.380208 1.90104 1.14062 1.14062C1.90104 0.380208 2.83333 0 3.9375 0H20.6875C21.7917 0 22.724 0.380208 23.4844 1.14062C24.2448 1.90104 24.625 2.83333 24.625 3.9375V20.6875C24.625 21.7917 24.2448 22.724 23.4844 23.4844C22.724 24.2448 21.7917 24.625 20.6875 24.625H3.9375ZM3.9375 20.6875H20.6875V3.9375H3.9375V20.6875ZM3.9375 3.9375V20.6875V3.9375Z"
+          fill="#2B6CEE" />
+      </svg>
+      <h1 class="text-xl font-bold text-black">Kanban 2026</h1>
+    </div>
+  </header>
 
-  <body>
-    <!-- en el header me falta border bottom -->
-    <header class="py-3 px-6 bg-white border-bborder-[var(--border-color)]">
-      <div class="flex items-center gap-2.5">
-        <svg width="25" height="25" viewBox="0 0 25 25" fill="none" xmlns="http://www.w3.org/2000/svg">
-          <path
-            d="M6.25 18.375H8.75V6.25H6.25V18.375ZM15.875 15.875H18.375V6.25H15.875V15.875ZM11.0625 12.125H13.5625V6.25H11.0625V12.125ZM3.9375 24.625C2.83333 24.625 1.90104 24.2448 1.14062 23.4844C0.380208 22.724 0 21.7917 0 20.6875V3.9375C0 2.83333 0.380208 1.90104 1.14062 1.14062C1.90104 0.380208 2.83333 0 3.9375 0H20.6875C21.7917 0 22.724 0.380208 23.4844 1.14062C24.2448 1.90104 24.625 2.83333 24.625 3.9375V20.6875C24.625 21.7917 24.2448 22.724 23.4844 23.4844C22.724 24.2448 21.7917 24.625 20.6875 24.625H3.9375ZM3.9375 20.6875H20.6875V3.9375H3.9375V20.6875ZM3.9375 3.9375V20.6875V3.9375Z"
-            fill="#2B6CEE" />
-        </svg>
-        <h1 class="text-xl font-bold text-black">Kanban 2026</h1>
-      </div>
-    </header>
+  <main>
+    <div
+      class=" container-controls p-[15px] px-[25px] flex flex-col items-start gap-[15px] sm:flex-row sm:justify-between sm:items-center">
+      <h2 class="text-lg font-semibold text-main">Product Roadmap</h2>
 
-    <main>
-      <div class="py-4 px-6s flex items-center justify-between">
-        <h2>Product Roadmap</h2>
-        <div class="flex items-center gap-3">
-          <div class="relative">
-            <svg class="absolute left-10 top-1/2 transform -translate-y-1/2 opacity-50" width="14" height="14"
-              viewBox="0 0 14 14" fill="none" xmlns="http://www.w3.org/2000/svg">
-              <path
-                d="M12.45 13.5L7.725 8.775C7.35 9.075 6.91875 9.3125 6.43125 9.4875C5.94375 9.6625 5.425 9.75 4.875 9.75C3.5125 9.75 2.35938 9.27813 1.41562 8.33438C0.471875 7.39063 0 6.2375 0 4.875C0 3.5125 0.471875 2.35938 1.41562 1.41562C2.35938 0.471875 3.5125 0 4.875 0C6.2375 0 7.39063 0.471875 8.33438 1.41562C9.27813 2.35938 9.75 3.5125 9.75 4.875C9.75 5.425 9.6625 5.94375 9.4875 6.43125C9.3125 6.91875 9.075 7.35 8.775 7.725L13.5 12.45L12.45 13.5ZM4.875 8.25C5.8125 8.25 6.60938 7.92188 7.26562 7.26562C7.92188 6.60938 8.25 5.8125 8.25 4.875C8.25 3.9375 7.92188 3.14062 7.26562 2.48438C6.60938 1.82812 5.8125 1.5 4.875 1.5C3.9375 1.5 3.14062 1.82812 2.48438 2.48438C1.82812 3.14062 1.5 3.9375 1.5 4.875C1.5 5.8125 1.82812 6.60938 2.48438 7.26562C3.14062 7.92188 3.9375 8.25 4.875 8.25Z"
-                fill="#94A3B8" />
+      <div class="controls flex flex-row w-full gap-1.5 sm:w-auto sm:gap-3 items-center">
+        <div class="search-container relative flex-[1.5] min-w-0 sm:flex-none">
+          <svg class="search-icon absolute left-2.5 top-1/2 -translate-y-1/2 opacity-50 pointer-events-none" width="14"
+            height="14" viewBox="0 0 14 14" fill="none">
+            <path
+              d="M12.45 13.5L7.725 8.775C7.35 9.075 6.91875 9.3125 6.43125 9.4875C5.94375 9.6625 5.425 9.75 4.875 9.75C3.5125 9.75 2.35938 9.27813 1.41562 8.33438C0.471875 7.39063 0 6.2375 0 4.875C0 3.5125 0.471875 2.35938 1.41562 1.41562C2.35938 0.471875 3.5125 0 4.875 0C6.2375 0 7.39063 0.471875 8.33438 1.41562C9.27813 2.35938 9.75 3.5125 9.75 4.875C9.75 5.425 9.6625 5.94375 9.4875 6.43125C9.3125 6.91875 9.075 7.35 8.775 7.725L13.5 12.45L12.45 13.5ZM4.875 8.25C5.8125 8.25 6.60938 7.92188 7.26562 7.26562C7.92188 6.60938 8.25 5.8125 8.25 4.875C8.25 3.9375 7.92188 3.14062 7.26562 2.48438C6.60938 1.82812 5.8125 1.5 4.875 1.5C3.9375 1.5 3.14062 1.82812 2.48438 2.48438C1.82812 3.14062 1.5 3.9375 1.5 4.875C1.5 5.8125 1.82812 6.60938 2.48438 7.26562C3.14062 7.92188 3.9375 8.25 4.875 8.25Z"
+              fill="currentColor" class="text-muted" />
+          </svg>
+          <input id="searchInput"
+            class="py-2 pl-8 pr-4 rounded-md text-[13px] w-full border border-border-custom bg-white sm:w-[250px] sm:text-sm md:w-80"
+            type="text" placeholder="Search...">
+        </div>
+
+        <div id="columnFilter"
+          class="relative flex items-center bg-white rounded-md py-1.5 px-3 border border-border-custom h-[36px]">
+          <button id="filter" class="flex items-center gap-2 font-semibold text-xs cursor-pointer text-main"
+            onclick="toggleMenu();">
+            <svg width="12" height="8" viewBox="0 0 12 8" fill="none">
+              <path d="M4.66667 8V6.66667H7.33333V8H4.66667ZM2 4.66667V3.33333H10V4.66667H2ZM0 1.33333V0H12V1.33333H0Z"
+                fill="currentColor" />
             </svg>
-            <input class="py-2.5 px-9 rounded-md text-sm w-80" type="text" id="searchInput" placeholder="Search...">
+            Filters
+          </button>
+
+          <div id="filterMenu"
+            class="tasks hidden absolute right-0 top-11.25 p-2.5 bg-white rounded-[10px] shadow-custom-md border border-border-custom flex-col gap-2 z-[100] min-w-[120px]">
+            <button id="btn-design"
+              class="bg-[hsl(239,84%,67%)] text-white text-[10px] py-1 px-2 rounded cursor-pointer hover:opacity-90"
+              onclick="filtrarPorTipo('DESIGN')">DESIGN</button>
+            <button id="btn-bug"
+              class="bg-red-500 text-white text-[10px] py-1 px-2 rounded cursor-pointer hover:opacity-90"
+              onclick="filtrarPorTipo('BUG')">BUG</button>
+            <button id="btn-urgent"
+              class="bg-blue-primary text-white text-[10px] py-1 px-2 rounded cursor-pointer hover:opacity-90"
+              onclick="filtrarPorTipo('URGENT')">URGENT</button>
+            <button class="text-[10px] py-1 border border-border-custom rounded cursor-pointer hover:bg-body"
+              onclick="filtrarPorTipo('ALL')">ALL</button>
           </div>
-          <!-- FILTROS -->
-          <div id="columnFilter" class="relative flex items-center bg-white rounded-md py-1.5 px-3">
-            <button class="flex items-center bg-none border-none gap-2 font-semibold text-xs cursor-pointer" id="filter"
-              onclick="toggleMenu();"><svg width="12" height="8" viewBox="0 0 12 8" fill="none"
-                xmlns="http://www.w3.org/2000/svg">
-                <path
-                  d="M4.66667 8V6.66667H7.33333V8H4.66667ZM2 4.66667V3.33333H10V4.66667H2ZM0 1.33333V0H12V1.33333H0Z"
-                  fill="#0F172A" />
-              </svg>Filters</button>
-            <!-- tasks -->
-            <div class="absolute right-0 display-none top-11 p-2.5 bg-white rounded-md shadow-lg gap-2 flex-col z-100">
-              <button class="bg-[hsl(239,84%,67%)]" id="btn-design" onclick="filtrarPorTipo('DESIGN')">DESIGN</button>
-              <button class="bg-red-500" id="btn-bug" onclick="filtrarPorTipo('BUG')">BUG</button>
-              <button class="bg-blue-500" id="btn-urgent" onclick="filtrarPorTipo('URGENT')">URGENT</button>
-              <button onclick="filtrarPorTipo('ALL')">ALL</button>
-            </div>
-          </div>
-          <button class="text-white border-none py-2 px-4 rounded-md cursor-pointer font-semibold text-xs"
-            id="addColumn">+ New Column</button>
         </div>
+
+        <button id="addColumn"
+          class="bg-blue-primary hover:bg-blue-hover text-white py-2 px-4 rounded-md font-semibold text-xs transition-colors h-[36px] cursor-pointer">
+          + New Column
+        </button>
       </div>
-
-      <div class="flex items-start gap-4 p-5 overflow-auto" id="board">
-      </div>
-
-      <template id="template-columna">
-        <!-- columna -->
-        <div class="flex flex-col rounded-lg p-3 w-75 max-h-[85vh]">
-          <!-- columna-header -->
-          <div class="flex items-center justify-center gap-2 mb-3 ">
-            <!-- titulo-columna creo q no lo uso MIRAR -->
-            <input type="text" class="titulo-columna"
-            placeholder="Escribe el título...">
-            <span class="contador-tareas">0</span>
-            <button class="btn-tres-puntos">•••</button>
-            <div class="menu-opciones">
-              <button class="btnEditar btn-accion">✎ Editar</button>
-              <button class="btnEliminar btn-accion">✕ Eliminar</button>
-            </div>
-          </div>
-          <div class="contenedor-tareas"></div>
-          <button class="add-card-btn">+ Add Card</button>
-        </div>
-      </template>
-
-      <template id="template-tarea">
-        <div class="tarea">
-          <div class="tarea-top">
-            <div class="etiquetas"></div>
-            <input type="text" placeholder="Escribe la tarea...">
-            <select class="tipo-tarea">
-              <option value="DESIGN">DESIGN</option>
-              <option value="BUG">BUG</option>
-              <option value="URGENT">URGENT</option>
-            </select>
-            <button class="btn-tres-puntos">•••</button>
-            <div class="menu-opciones">
-              <button class="btnEditar btn-accion">✎ Editar</button>
-              <button class="btnEliminar btn-accion">✕ Eliminar</button>
-            </div>
-          </div>
-          <div class="tarea-meta">
-            <img src="User.png" alt="creador" id="foto">
-            <span class="fecha"></span>
-          </div>
-        </div>
-      </template>
-    </main>
     </div>
 
-  </body>
+    <div id="board"
+      class="flex flex-col sm:flex-row items-start gap-4 p-2.5 sm:p-5 overflow-auto min-h-[calc(100vh-150px)]">
+    </div>
 
+    <template id="template-columna">
+      <div
+        class="columna flex flex-col bg-columna rounded-[10px] p-3 w-[342px] min-w-[342px] sm:w-[300px] sm:min-w-[300px] max-h-[85vh]">
+        <div class="columna-header flex items-center justify-between gap-2 mb-3 relative">
+          <input type="text"
+            class="titulo-columna bg-transparent border-none font-bold text-sm uppercase flex-1 focus:outline-none placeholder:text-muted/50"
+            placeholder="Escribe el título...">
+
+          <span
+            class="contador-tareas bg-border-custom px-2 py-0.5 rounded-full text-[12px] font-bold text-slate-600 contador-tareas">0</span>
+
+          <button class="btn-tres-puntos text-muted cursor-pointer text-lg hover:text-main">•••</button>
+
+          <div
+            class="menu-opciones hidden absolute top-8 right-0 bg-white border border-border-custom rounded-lg shadow-custom-md z-50 overflow-hidden min-w-[100px]">
+            <button
+              class="btnEditar btn-accion px-3 py-2 text-xs text-left w-full bg-white hover:bg-slate-100 cursor-pointer">✎
+              Editar</button>
+            <button
+              class="btnEliminar btn-accion px-3 py-2 text-xs text-left w-full bg-white hover:bg-slate-100 cursor-pointer text-red-500">✕
+              Eliminar</button>
+          </div>
+        </div>
+
+        <div class="contenedor-tareas flex-1 overflow-y-auto min-h-[50px] flex flex-col gap-2"></div>
+
+        <button
+          class="add-card-btn text-slate-500 p-2.5 text-sm text-left rounded-md hover:bg-black/5 cursor-pointer mt-2 transition-colors">
+          + Add Card
+        </button>
+      </div>
+    </template>
+
+    <template id="template-tarea">
+      <div
+        class="tarea bg-white p-3 rounded-lg shadow-custom-sm border border-transparent hover:shadow-custom-md cursor-grab active:cursor-grabbing flex flex-col gap-3 transition-shadow duration-200">
+
+        <div class="tarea-top flex gap-2 relative items-start">
+          <div class="etiquetas flex gap-1.5"></div>
+
+          <input type="text" class="border-none text-sm font-medium outline-none w-full bg-transparent"
+            placeholder="Escribe la tarea...">
+
+          <select class="tipo-tarea text-[10px] font-bold border-none bg-slate-100 rounded px-1 cursor-pointer">
+            <option value="DESIGN">DESIGN</option>
+            <option value="BUG">BUG</option>
+            <option value="URGENT">URGENT</option>
+          </select>
+
+          <button class="btn-tres-puntos text-muted text-sm cursor-pointer hover:text-main">•••</button>
+        </div>
+
+        <div class="tarea-meta flex justify-between items-center mt-1">
+          <img src="User.png" alt="creador" class="w-6 h-6 rounded-full object-cover">
+          <span class="fecha text-muted text-[10px]"></span>
+        </div>
+      </div>
+    </template>
+</main>
+</body>
 </html>
