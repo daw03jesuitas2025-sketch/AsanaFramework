@@ -1,1 +1,54 @@
-@import 'tailwindcss';
+@import "tailwindcss";
+
+@theme {
+  /* Aquí defines tus colores personalizados */
+  --color-body-bg: #f4f5f7;
+  --color-columna: #ebecf0;
+  --color-blue-primary: #2b6cee;
+  --color-blue-hover: #1d4ed8;
+  --color-main: #0f172a;
+  --color-muted: #94a3b8;
+  --color-border-custom: #dfe1e6;
+
+  /* Aquí tus sombras */
+  --shadow-custom-sm: 0 1px 3px rgba(0, 0, 0, 0.1);
+  --shadow-custom-md: 0 4px 6px rgba(0, 0, 0, 0.1);
+
+  /* Fuente */
+  --font-sans: "Inter", sans-serif;
+}
+
+/* Aplicar al body directamente */
+@layer base {
+  body {
+    @apply bg-body-bg text-main font-sans;
+  }
+}
+@layer components {
+  /* Clase base para todas las etiquetas */
+  .etiqueta {
+    @apply text-[10px] font-bold px-2 py-0.5 rounded text-white uppercase inline-block;
+  }
+
+  /* Colores específicos para cada tipo de etiqueta */
+  .etiqueta.design {
+    background-color: hsl(239, 84%, 67%);
+  }
+
+  .etiqueta.bug {
+    @apply bg-red-500;
+  }
+
+  .etiqueta.urgent {
+    @apply bg-blue-primary;
+  }
+
+  /* Estilos para el Drag & Drop */
+  .tarea.dragging {
+    @apply opacity-50 shadow-none border-dashed border-blue-primary;
+  }
+
+  .contenedor-tareas.drag-over {
+    @apply bg-blue-primary/10 rounded-lg;
+  }
+}
