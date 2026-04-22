@@ -30,11 +30,11 @@
 
   <main>
     <div
-      class=" container-controls p-[15px] px-[25px] flex flex-col items-start gap-[15px] sm:flex-row sm:justify-between sm:items-center">
+      class=" container-controls p-3.15px px-6.25px flex flex-col items-start gap-3.75 sm:flex-row sm:justify-between sm:items-center">
       <h2 class="text-lg font-semibold text-main">Product Roadmap</h2>
 
       <div class="controls flex flex-row w-full gap-1.5 sm:w-auto sm:gap-3 items-center">
-        <div class="search-container relative flex-[1.5] min-w-0 sm:flex-none">
+        <div class="search-container relative flex min-w-0 sm:flex-none">
           <svg class="search-icon absolute left-2.5 top-1/2 -translate-y-1/2 opacity-50 pointer-events-none" width="14"
             height="14" viewBox="0 0 14 14" fill="none">
             <path
@@ -42,12 +42,12 @@
               fill="currentColor" class="text-muted" />
           </svg>
           <input id="searchInput"
-            class="py-2 pl-8 pr-4 rounded-md text-[13px] w-full border border-border-custom bg-white sm:w-[250px] sm:text-sm md:w-80"
+            class="py-2 pl-8 pr-4 rounded-md text-[13px] w-full border border-border-custom bg-white sm:w-62.5 sm:text-sm md:w-80"
             type="text" placeholder="Search...">
         </div>
 
         <div id="columnFilter"
-          class="relative flex items-center bg-white rounded-md py-1.5 px-3 border border-border-custom h-[36px]">
+          class="relative flex items-center bg-white rounded-md py-1.5 px-3 border border-border-custom h-9">
           <button id="filter" class="flex items-center gap-2 font-semibold text-xs cursor-pointer text-main"
             onclick="toggleMenu();">
             <svg width="12" height="8" viewBox="0 0 12 8" fill="none">
@@ -58,7 +58,7 @@
           </button>
 
           <div id="filterMenu"
-            class="tasks hidden absolute right-0 top-11.25 p-2.5 bg-white rounded-[10px] shadow-custom-md border border-border-custom flex-col gap-2 z-[100] min-w-[120px]">
+            class="tasks hidden absolute right-0 top-11.25 p-2.5 bg-white rounded-[10px] shadow-custom-md border border-border-custom flex-col gap-2 z-100 min-w-30">
             <button id="btn-design"
               class="bg-[hsl(239,84%,67%)] text-white text-[10px] py-1 px-2 rounded cursor-pointer hover:opacity-90"
               onclick="filtrarPorTipo('DESIGN')">DESIGN</button>
@@ -74,7 +74,7 @@
         </div>
 
         <button id="addColumn"
-          class="bg-blue-primary hover:bg-blue-hover text-white py-2 px-4 rounded-md font-semibold text-xs transition-colors h-[36px] cursor-pointer">
+          class="bg-blue-primary hover:bg-blue-hover text-white py-2 px-4 rounded-md font-semibold text-xs transition-colors h-9 cursor-pointer">
           + New Column
         </button>
       </div>
@@ -86,7 +86,7 @@
 
     <template id="template-columna">
       <div
-        class="columna flex flex-col bg-columna rounded-[10px] p-3 w-[342px] min-w-[342px] sm:w-[300px] sm:min-w-[300px] max-h-[85vh]">
+        class="columna flex flex-col bg-columna rounded-[10px] p-3 w-85.5 min-w-85.5 sm:w-75 sm:min-w-75 max-h-[85vh]">
         <div class="columna-header flex items-center justify-between gap-2 mb-3 relative">
           <input type="text"
             class="titulo-columna bg-transparent border-none font-bold text-sm uppercase flex-1 focus:outline-none placeholder:text-muted/50"
@@ -98,7 +98,7 @@
           <button class="btn-tres-puntos text-muted cursor-pointer text-lg hover:text-main">•••</button>
 
           <div
-            class="menu-opciones hidden absolute top-8 right-0 bg-white border border-border-custom rounded-lg shadow-custom-md z-50 overflow-hidden min-w-[100px]">
+            class="menu-opciones hidden absolute top-8 right-0 bg-white border border-border-custom rounded-lg shadow-custom-md z-50 overflow-hidden min-w-25">
             <button
               class="btnEditar btn-accion px-3 py-2 text-xs text-left w-full bg-white hover:bg-slate-100 cursor-pointer">✎
               Editar</button>
@@ -108,7 +108,7 @@
           </div>
         </div>
 
-        <div class="contenedor-tareas flex-1 overflow-y-auto min-h-[50px] flex flex-col gap-2"></div>
+        <div class="contenedor-tareas flex-1 overflow-y-auto min-h-12.5 flex flex-col gap-2"></div>
 
         <button
           class="add-card-btn text-slate-500 p-2.5 text-sm text-left rounded-md hover:bg-black/5 cursor-pointer mt-2 transition-colors">
