@@ -11,8 +11,7 @@
   <link
     href="https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&display=swap"
     rel="stylesheet">
-  <!-- <script src="./sqlite3.js"></script> -->
-  <script type="module" src="/src/main.js"></script>
+  <script type="module" src="/src/main.ts"></script>
 
 </head>
 
@@ -68,7 +67,7 @@
             <button id="btn-urgent"
               class="bg-blue-primary text-white text-[10px] py-1 px-2 rounded cursor-pointer hover:opacity-90"
               onclick="filtrarPorTipo('URGENT')">URGENT</button>
-            <button class="text-[10px] py-1 border border-border-custom rounded cursor-pointer hover:bg-body"
+            <button class="bg-gray-400 text-white text-[10px] py-1 px-2 border border-border-custom rounded cursor-pointer hover:bg-body"
               onclick="filtrarPorTipo('ALL')">ALL</button>
           </div>
         </div>
@@ -128,6 +127,7 @@
             placeholder="Escribe la tarea...">
 
           <select class="tipo-tarea text-[10px] font-bold border-none bg-slate-100 rounded px-1 cursor-pointer">
+            <option value="" disabled selected>Seleccionar tipo</option>
             <option value="DESIGN">DESIGN</option>
             <option value="BUG">BUG</option>
             <option value="URGENT">URGENT</option>
@@ -137,7 +137,7 @@
         </div>
 
         <div class="tarea-meta flex justify-between items-center mt-1">
-          <img src="User.png" alt="creador" class="w-6 h-6 rounded-full object-cover">
+          <img src="assets/images/User.png" alt="creador" class="w-6 h-6 rounded-full object-cover">
           <span class="fecha text-muted text-[10px]"></span>
         </div>
       </div>
