@@ -1,9 +1,6 @@
 window.onload = function () {
   const addColumn = document.getElementById('addColumn') as HTMLButtonElement;
   const searchInput = document.getElementById('searchInput') as HTMLInputElement;
-  const columnFilter = document.getElementById('columnFilter') as HTMLSelectElement;
-
-  cargarEstado();
 
   if (addColumn) {
     addColumn.onclick = () => añadirColumna();
@@ -25,16 +22,22 @@ window.onload = function () {
 
   const btnMenu = document.getElementById('filter');
   if (btnMenu) {
-    btnMenu.onclick = toggleMenu;
+    btnMenu.addEventListener('click', toggleMenu);
   }
-  // cargarEstado();
+  cargarEstado();
+  actualizarContadores();
+
+  document.getElementById('btn-design')?.addEventListener('click', () => filtrarPorTipo('DESIGN'));
+  document.getElementById('btn-urgent')?.addEventListener('click', () => filtrarPorTipo('URGENT'));
+  document.getElementById('btn-bug')?.addEventListener('click', () => filtrarPorTipo('BUG'));
+  document.getElementById('btn-all')?.addEventListener('click', () => filtrarPorTipo('ALL'));
 };
 
 // Evento filtro
 
 // para mostrar y ocultar el menu
 function toggleMenu() {
-  const menu = document.getElementById('filterMenu') as HTMLElement;
+  const menu = document.getElementById('filterMenu');
   if (!menu) return;
   menu.classList.toggle('hidden');
 }
@@ -42,15 +45,15 @@ function toggleMenu() {
 function filtrarPorTipo(tipo: string) {
   document.querySelectorAll<HTMLElement>('.tarea').forEach((tarea) => {
     // comprobar de que tipo es la tarea
-    const tipoTarea = tarea.dataset.tipo;
-    if (tipo === 'ALL' || tarea.dataset.tipo === tipo) {
+    const tipoTarea = tarea.dataset.tipo || '';
+    if (tipo === 'ALL' || tipoTarea === tipo) {
       (tarea as HTMLElement).style.display = 'block';
     } else {
       (tarea as HTMLElement).style.display = 'none';
     }
   });
   // Cerrar el menú después de seleccionar filtro
-  const menu = document.getElementById('filterMenu') as HTMLElement;
+  const menu = document.getElementById('filterMenu');
   if (menu) {
     menu.classList.add('hidden');
   }
@@ -84,12 +87,13 @@ function añadirColumna(textoExistente = '') {
   ContenedorDrop(contenedorTareas);
   crearBotonesAccion(header, titulo, columna);
   board.appendChild(clon);
+  actualizarContadores();
 
   btnTarea.onclick = () => crearTarea(contenedorTareas, '');
 
-  if (textoExistente === '') {
-    guardarEstado();
-  }
+  // if (textoExistente === '') {
+  //   guardarEstado();
+  // }
 }
 // Drag and Drop
 
@@ -185,6 +189,9 @@ function crearTarea(
   const selectTipo = clon.querySelector('.tipo-tarea') as HTMLSelectElement;
   const contenedorEtiquetas = clon.querySelector('.etiquetas') as HTMLElement;
 
+  // Inicializar dataset.tipo vacío por defecto
+  tarea.dataset.tipo = '';
+
   // pintar etiqueta
   function pintarEtiqueta(tipo: string) {
     contenedorEtiquetas.innerHTML = '';
@@ -237,17 +244,30 @@ function crearTarea(
   DragAndDrop(tarea);
 
   contenedor.appendChild(clon);
-
+  actualizarContadores();
   // guardar solo si ya eligió tipo
   if (textoExistente === '' && tipoGuardado) {
     guardarEstado();
   }
 }
 
+function actualizarContadores(): void {
+  const columnas = document.querySelectorAll('.columna');
+  columnas.forEach((col) => {
+    const columna = col as HTMLElement;
+    const numTareas = columna.querySelectorAll('.tarea').length;
+    const contadorSpan = columna.querySelector('.contador-tareas') as HTMLElement;
+    if (contadorSpan) {
+      contadorSpan.textContent = numTareas.toString();
+    }
+  });
+}
+
 /* LOCAL STORAGE */
 interface TareaDatos {
   titulo: string;
   tipo?: string;
+  fecha: string;
 }
 
 interface ColumnaDatos {
@@ -263,10 +283,12 @@ function guardarEstado() {
     col.querySelectorAll('.tarea').forEach((t) => {
       const inputTarea = t.querySelector('input') as HTMLInputElement;
       const tipo = (t as HTMLElement).dataset.tipo || '';
-      tareas.push({ titulo: inputTarea.value, tipo });
+      const fechaTexto = t.querySelector('.fecha')?.textContent || '';
+      tareas.push({ titulo: inputTarea.value, tipo, fecha: fechaTexto });
     });
     columnas.push({ titulo, tareas });
   });
+  actualizarContadores();
   // convertir en texto json
   localStorage.setItem('kanban_data', JSON.stringify(columnas));
 }
@@ -280,23 +302,16 @@ function cargarEstado() {
   board.innerHTML = ''; // Limpiamos el tablero antes de cargar
 
   datos.forEach((dataCol) => {
-    // 1. Creamos la columna usando la función que ya tienes
     añadirColumna(dataCol.titulo);
-
-    // 2. Obtenemos la última columna añadida para meterle sus tareas
     const todasLasColumnas = board.querySelectorAll('.contenedor-tareas');
     const contenedorTareasActual = todasLasColumnas[todasLasColumnas.length - 1] as HTMLElement;
 
-    // 3. Creamos las tareas dentro de esa columna
     dataCol.tareas.forEach((tareaDatos) => {
       const texto = typeof tareaDatos === 'string' ? tareaDatos : tareaDatos.titulo;
       const tipo = typeof tareaDatos === 'string' ? undefined : tareaDatos.tipo;
-      crearTarea(contenedorTareasActual, texto, null, tipo);
+      const fecha = typeof tareaDatos === 'string' ? null : tareaDatos.fecha;
+      crearTarea(contenedorTareasActual, texto, fecha, tipo);
     });
   });
+  actualizarContadores();
 }
-
-// Exponer funciones globalmente para usar desde HTML
-(window as any).filtrarPorTipo = filtrarPorTipo;
-(window as any).toggleMenu = toggleMenu;
-(window as any).crearTarea = crearTarea;
