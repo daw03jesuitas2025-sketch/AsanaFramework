@@ -1,5 +1,8 @@
+// otra manera de hacer el querySelector con tipado, para no tener que escribir tanto
+const $ = <A extends HTMLElement>(selector: string): A | null => document.querySelector(selector);
+
 window.onload = function () {
-  const addColumn = document.getElementById('addColumn') as HTMLButtonElement;
+  const addColumn = $<HTMLButtonElement>('#addColumn');
   const searchInput = document.getElementById('searchInput') as HTMLInputElement;
 
   if (addColumn) {
@@ -11,11 +14,11 @@ window.onload = function () {
     return;
   }
   searchInput.addEventListener('input', function () {
-    const texto = (searchInput as HTMLInputElement).value.toLowerCase();
+    const texto = searchInput.value.toLowerCase();
     document.querySelectorAll('.tarea').forEach((tarea) => {
       if (!tarea.querySelector('input')) return;
       const input = tarea.querySelector('input') as HTMLInputElement;
-      const contenido = (searchInput as HTMLInputElement).value.toLowerCase();
+      const contenido = searchInput.value.toLowerCase();
       (tarea as HTMLElement).style.display = contenido.includes(texto) ? 'block' : 'none';
     });
   });
@@ -27,6 +30,7 @@ window.onload = function () {
   cargarEstado();
   actualizarContadores();
 
+  // si encuentra el ID le añade el evento, si no, no hace nada
   document.getElementById('btn-design')?.addEventListener('click', () => filtrarPorTipo('DESIGN'));
   document.getElementById('btn-urgent')?.addEventListener('click', () => filtrarPorTipo('URGENT'));
   document.getElementById('btn-bug')?.addEventListener('click', () => filtrarPorTipo('BUG'));
@@ -153,7 +157,7 @@ function crearBotonesAccion(
 
     // 4. Si no estaba abierto, aparece
     if (!estabaAbierto) {
-      (menu as HTMLElement).style.display = 'block';
+      menu.style.display = 'block';
     }
   };
 
@@ -293,12 +297,39 @@ function guardarEstado() {
   localStorage.setItem('kanban_data', JSON.stringify(columnas));
 }
 
+// Type Guard para validar que los datos cargados del localStorage tienen la forma correcta
+function isColumn(column: any | ColumnaDatos): column is ColumnaDatos {
+  return (
+    (column as ColumnaDatos).tareas !== undefined && (column as ColumnaDatos).titulo !== undefined
+  );
+}
+
 function cargarEstado() {
   const board = document.getElementById('board') as HTMLElement;
   const datosRaw = localStorage.getItem('kanban_data');
   if (!datosRaw || !board) return;
 
-  const datos = JSON.parse(datosRaw) as ColumnaDatos[];
+  let datos: ColumnaDatos[] = [];
+
+  try {
+    const quizaColumnas = JSON.parse(datosRaw);
+
+    if (Array.isArray(quizaColumnas) && quizaColumnas.every(isColumn)) {
+      datos = quizaColumnas;
+    }
+  } catch (e) {
+    console.error('Error al cargar datos del localStorage:', e);
+    return;
+  }
+
+  // let datos: ColumnaDatos[] = [];
+  // try {
+  //   datos = JSON.parse(datosRaw);
+  // } catch (e) {
+  //   // console.error('Error al analizar JSON del localStorage:', e);
+  //   return;
+  // }
+  // const datos = JSON.parse(datosRaw) as ColumnaDatos[];
   board.innerHTML = ''; // Limpiamos el tablero antes de cargar
 
   datos.forEach((dataCol) => {
